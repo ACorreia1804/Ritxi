@@ -1,1 +1,307 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Da tua Negrita fav</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    body {
+      background: #0d0d0d;
+      font-family: 'Inter', sans-serif;
+      color: #e8e8e8;
+      min-height: 100vh;
+    }
+
+    header {
+      text-align: center;
+      padding: 70px 20px 50px;
+      position: relative;
+    }
+
+    header h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.4rem, 6vw, 4.5rem);
+      font-weight: 300;
+      letter-spacing: 0.04em;
+      color: #f0ece4;
+      line-height: 1.2;
+    }
+
+    header h1 em {
+      font-style: italic;
+      color: #c9a96e;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: '';
+      width: 80px;
+      height: 1px;
+      background: linear-gradient(to right, transparent, #c9a96e);
+    }
+
+    .divider::after {
+      background: linear-gradient(to left, transparent, #c9a96e);
+    }
+
+    .divider span {
+      color: #c9a96e;
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+    }
+
+    .gallery {
+      column-count: 3;
+      column-gap: 10px;
+      padding: 20px 20px 80px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 768px) { .gallery { column-count: 2; } }
+    @media (max-width: 480px) { .gallery { column-count: 1; } }
+
+    .item {
+      break-inside: avoid;
+      margin-bottom: 10px;
+      overflow: hidden;
+      border-radius: 2px;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .item::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, transparent 60%, rgba(0,0,0,0.4));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .item:hover::after { opacity: 1; }
+
+    .item img,
+    .item video {
+      width: 100%;
+      display: block;
+      transition: transform 0.5s ease;
+      filter: brightness(0.92);
+    }
+
+    .item:hover img,
+    .item:hover video {
+      transform: scale(1.04);
+      filter: brightness(1);
+    }
+
+    .play-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 50px;
+      height: 50px;
+      background: rgba(201, 169, 110, 0.2);
+      border: 1px solid rgba(201, 169, 110, 0.6);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .play-icon svg { width: 18px; height: 18px; fill: #c9a96e; margin-left: 3px; }
+
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.96);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .lightbox.open { display: flex; }
+
+    .lightbox-inner {
+      position: relative;
+      max-width: 90vw;
+      max-height: 90vh;
+    }
+
+    .lightbox-inner img,
+    .lightbox-inner video {
+      max-width: 90vw;
+      max-height: 85vh;
+      border-radius: 2px;
+      display: block;
+    }
+
+    .lightbox-close {
+      position: fixed;
+      top: 24px;
+      right: 32px;
+      font-size: 1.8rem;
+      color: #c9a96e;
+      cursor: pointer;
+      background: none;
+      border: none;
+      line-height: 1;
+      opacity: 0.7;
+      transition: opacity 0.2s;
+      font-family: 'Cormorant Garamond', serif;
+    }
+
+    .lightbox-close:hover { opacity: 1; }
+
+    .lightbox-nav {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(201, 169, 110, 0.08);
+      border: 1px solid rgba(201, 169, 110, 0.2);
+      color: #c9a96e;
+      font-size: 2rem;
+      cursor: pointer;
+      padding: 12px 18px;
+      border-radius: 2px;
+      transition: all 0.2s;
+      font-family: 'Cormorant Garamond', serif;
+    }
+
+    .lightbox-nav:hover {
+      background: rgba(201, 169, 110, 0.18);
+      border-color: rgba(201, 169, 110, 0.5);
+    }
+
+    .lightbox-prev { left: 12px; }
+    .lightbox-next { right: 12px; }
+
+    .empty {
+      text-align: center;
+      padding: 100px 20px;
+      color: #444;
+    }
+
+    .empty p {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.6rem;
+      margin-bottom: 8px;
+      color: #555;
+    }
+
+    .empty span {
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #3a3a3a;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Da tua <em>Negrita fav</em></h1>
+    <div class="divider"><span>✦</span></div>
+  </header>
+
+  <div class="gallery" id="gallery">
+    <!-- ADICIONA AS TUAS FOTOS E VÍDEOS AQUI -->
+    <!-- Exemplo foto:
+    <div class="item">
+      <img src="foto1.jpg" alt="" loading="lazy" />
+    </div>
+    -->
+    <!-- Exemplo vídeo:
+    <div class="item">
+      <video src="video1.mp4" muted playsinline preload="metadata"></video>
+      <div class="play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+    </div>
+    -->
+  </div>
+
+  <div class="empty" id="emptyState">
+    <p>Em breve…</p>
+    <span>as memórias chegam</span>
+  </div>
+
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" onclick="closeLightbox()">×</button>
+    <button class="lightbox-nav lightbox-prev" onclick="navigate(-1)">‹</button>
+    <div class="lightbox-inner" id="lightboxInner"></div>
+    <button class="lightbox-nav lightbox-next" onclick="navigate(1)">›</button>
+  </div>
+
+  <script>
+    let currentIndex = 0;
+    const items = [];
+
+    document.querySelectorAll('.gallery .item').forEach((el, i) => {
+      const img = el.querySelector('img');
+      const vid = el.querySelector('video');
+      if (img) items.push({ type: 'image', src: img.src });
+      if (vid) items.push({ type: 'video', src: vid.src });
+      el.onclick = () => openLightbox(i);
+    });
+
+    if (items.length > 0) {
+      document.getElementById('emptyState').style.display = 'none';
+    }
+
+    function openLightbox(index) {
+      if (items.length === 0) return;
+      currentIndex = index;
+      renderLightbox();
+      document.getElementById('lightbox').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('open');
+      document.getElementById('lightboxInner').innerHTML = '';
+      document.body.style.overflow = '';
+    }
+
+    function navigate(dir) {
+      currentIndex = (currentIndex + dir + items.length) % items.length;
+      renderLightbox();
+    }
+
+    function renderLightbox() {
+      const inner = document.getElementById('lightboxInner');
+      const item = items[currentIndex];
+      if (item.type === 'image') {
+        inner.innerHTML = `<img src="${item.src}" />`;
+      } else {
+        inner.innerHTML = `<video src="${item.src}" controls autoplay style="max-width:90vw;max-height:85vh;border-radius:2px;display:block;"></video>`;
+      }
+    }
+
+    document.getElementById('lightbox').addEventListener('click', function(e) {
+      if (e.target === this) closeLightbox();
+    });
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowRight') navigate(1);
+      if (e.key === 'ArrowLeft') navigate(-1);
+    });
+  </script>
+</body>
+</html>
