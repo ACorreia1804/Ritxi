@@ -1,20 +1,37 @@
-
 <!DOCTYPE html>
 <html lang="pt">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Da tua Ritxi</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@300;400&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      background: #ffffff;
+      background: #fdf6f0;
       font-family: 'Inter', sans-serif;
       color: #1a1a1a;
       min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
     }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 10% 10%, rgba(232,168,152,0.25) 0%, transparent 50%),
+        radial-gradient(ellipse at 90% 5%, rgba(201,169,110,0.2) 0%, transparent 45%),
+        radial-gradient(ellipse at 50% 50%, rgba(255,240,235,0.4) 0%, transparent 70%),
+        radial-gradient(ellipse at 5% 90%, rgba(212,160,176,0.2) 0%, transparent 45%),
+        radial-gradient(ellipse at 95% 95%, rgba(232,168,152,0.2) 0%, transparent 45%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    body > * { position: relative; z-index: 1; }
 
     header {
       text-align: center;
@@ -67,9 +84,7 @@
       transition: transform 0.4s ease;
     }
 
-    .item:hover img {
-      transform: scale(1.03);
-    }
+    .item:hover img { transform: scale(1.03); }
 
     .item iframe {
       width: 100%;
@@ -78,6 +93,112 @@
       border-radius: 4px;
     }
 
+    /* CARTA */
+    .carta-section {
+      max-width: 760px;
+      margin: 0 auto 80px;
+      padding: 0 24px;
+    }
+
+    .carta {
+      background: rgba(255,255,255,0.75);
+      border-radius: 16px;
+      padding: 56px 60px;
+      box-shadow: 0 8px 48px rgba(180,120,100,0.10);
+      border: 1px solid rgba(180,120,100,0.15);
+      position: relative;
+    }
+
+    .carta::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #e8a898, #c9a96e, #e8a898);
+      border-radius: 16px 16px 0 0;
+    }
+
+    .carta-deco {
+      text-align: center;
+      color: #c9a96e;
+      font-size: 18px;
+      letter-spacing: 0.4em;
+      margin-bottom: 28px;
+    }
+
+    .carta-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin: 16px 0 32px;
+      color: #e8a898;
+      font-size: 14px;
+    }
+
+    .carta-divider::before, .carta-divider::after {
+      content: '';
+      width: 60px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #e8a898);
+    }
+
+    .carta-divider::after {
+      background: linear-gradient(90deg, #e8a898, transparent);
+    }
+
+    .carta-titulo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 300;
+      color: #7a3d3d;
+      text-align: center;
+      letter-spacing: 0.02em;
+    }
+
+    .carta-titulo em {
+      font-style: italic;
+      color: #c9a96e;
+    }
+
+    .carta-texto {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem;
+      line-height: 1.95;
+      color: #3d2a2a;
+      text-align: justify;
+    }
+
+    .carta-texto p { margin-bottom: 1.5em; }
+
+    .carta-texto p:first-child::first-letter {
+      font-size: 3.2rem;
+      font-weight: 300;
+      float: left;
+      line-height: 0.8;
+      margin-right: 8px;
+      color: #c9a96e;
+      font-style: italic;
+    }
+
+    .carta-assinatura {
+      text-align: right;
+      margin-top: 36px;
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.25rem;
+      color: #7a3d3d;
+    }
+
+    .carta-fim {
+      text-align: center;
+      margin-top: 28px;
+      color: #e8a898;
+      font-size: 1.2rem;
+      letter-spacing: 0.4em;
+    }
+
+    /* LIGHTBOX */
     .lightbox {
       display: none;
       position: fixed;
@@ -137,6 +258,10 @@
     .lightbox-nav:hover { background: rgba(255,255,255,0.25); }
     .lightbox-prev { left: 12px; }
     .lightbox-next { right: 12px; }
+
+    @media (max-width: 600px) {
+      .carta { padding: 36px 24px; }
+    }
   </style>
 </head>
 <body>
@@ -153,7 +278,7 @@
       <iframe
         src="https://www.youtube.com/embed/0qL_apajNEM"
         width="100%"
-        height="300"
+        height="500"
         frameborder="0"
         allowfullscreen>
       </iframe>
@@ -168,6 +293,29 @@
 
   </div>
 
+  <!-- CARTA -->
+  <div class="carta-section">
+    <div class="carta">
+      <div class="carta-deco">✦ ✦ ✦</div>
+      <div class="carta-titulo">Minha querida <em>Bia</em></div>
+      <div class="carta-divider">✿</div>
+      <div class="carta-texto">
+        <p>Nem sei bem como começar a pôr em palavras tudo aquilo que foste para mim nestes anos. Não foste a amiga do primeiro dia, mas a verdade é que parece que estiveste sempre lá. Tornaste-te casa, conforto, apoio e uma das pessoas mais importantes desta fase tão bonita da minha vida.</p>
+        <p>Partilhámos tanto juntas… voluntariados, estágios, trabalhos de grupo intermináveis, apresentações cheias de nervos, mas sempre lado a lado, sempre a puxar uma pela outra. Foste companhia nos momentos mais felizes e abrigo nos dias mais difíceis. Entre problemas e soluções, lágrimas e gargalhadas, aprendemos a crescer juntas.</p>
+        <p>Foram dois anos que passaram a correr, mas que deixaram memórias que vou guardar para sempre. Desde as receitas novas que inventávamos sem saber no que iam dar, às conversas intermináveis pela madrugada dentro, às fofocas, aos desabafos, ao muito choro e às gargalhadas que nos deixavam sem ar. Sem dúvida que muitos dos melhores momentos desta caminhada só foram tão especiais porque tu estavas lá.</p>
+        <p>Obrigada por teres sido a melhor colega de casa que eu podia ter tido. Pela paciência, pela partilha, pelo carinho e até pelas trocas de roupa que, ao contrário do que toda a gente diz, voltavam sempre ao mesmo sítio. Pelas nossas sessões de cabeleireiras improvisadas, pelas maquilhagens antes de sairmos, pelos momentos em que eras stylist profissional a escolher outfits e a salvar qualquer indecisão minha. Tudo contigo se tornava mais leve, mais divertido e mais especial.</p>
+        <p>E como esquecer as nossas saídas à noite? A verdade é que bastava irmos as duas para tudo valer a pena. As caminhadas de regresso a casa, cansadas mas felizes, cheias de fome e já a pensar no que íamos comer quando chegássemos. E claro, aqueles momentos tão nossos de acordar e ir logo diretas à comida porque parecia impossível existir tanta fome logo de manhã. Pequenas rotinas que, sem darmos conta, se tornaram algumas das memórias mais especiais.</p>
+        <p>Obrigada pelos lanches improvisados, pelas caminhadas, corridas, fotografias e pores-do-sol que pareciam simples, mas que ao teu lado se transformavam em memórias inesquecíveis. Obrigada também por todas as viagens, de carro, a pé, de autocarro, porque, no fundo, o destino nunca importava muito quando ia contigo. Estiveste presente em tudo: até na procura de casa, nos momentos de stress, nas conquistas, nas dúvidas e nas pequenas vitórias do dia a dia.</p>
+        <p>E acima de tudo, obrigada por seres tu. Quero que nunca te esqueças do quanto eu gosto de ti, imensoooo. Daqueles gostos que não cabem em palavras e que se sentem nas pequenas coisas, na saudade antecipada e no carinho que fica em cada memória. Tenho um orgulho gigante em ti e na mulher incrível que és.</p>
+        <p>Levo comigo cada abraço, cada conversa, cada gargalhada e cada momento vivido contigo. E levo-te a ti também, para sempre no meu coração. Tenho a certeza de que a vida ainda nos vai dar muitos capítulos juntas, porque amizades como a nossa não acabam com o final do curso, apenas mudam de cenário.</p>
+        <p>Obrigada por tudo, minha Bia! Para sempre!!! 💝💝</p>
+      </div>
+      <div class="carta-assinatura">Com todo o amor, a tua Ritxi 🤍</div>
+      <div class="carta-fim">✿ ✦ ✿</div>
+    </div>
+  </div>
+
+  <!-- LIGHTBOX -->
   <div class="lightbox" id="lightbox">
     <button class="lightbox-close" onclick="closeLightbox()">×</button>
     <button class="lightbox-nav lightbox-prev" onclick="navigate(-1)">‹</button>
@@ -221,6 +369,3 @@
   </script>
 </body>
 </html>
-```
-
-Substitui o `index.html` no GitHub por este código e deve funcionar! 🎬
