@@ -92,38 +92,24 @@
 
     .item:hover::after { opacity: 1; }
 
-    .item img,
-    .item video {
+    .item img {
       width: 100%;
       display: block;
       transition: transform 0.5s ease;
       filter: brightness(0.92);
     }
 
-    .item:hover img,
-    .item:hover video {
+    .item:hover img {
       transform: scale(1.04);
       filter: brightness(1);
     }
 
-    .play-icon {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 50px;
-      height: 50px;
-      background: rgba(201, 169, 110, 0.2);
-      border: 1px solid rgba(201, 169, 110, 0.6);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      pointer-events: none;
-      z-index: 2;
+    .item iframe {
+      width: 100%;
+      display: block;
+      border: none;
+      border-radius: 2px;
     }
-
-    .play-icon svg { width: 18px; height: 18px; fill: #c9a96e; margin-left: 3px; }
 
     .lightbox {
       display: none;
@@ -144,8 +130,7 @@
       max-height: 90vh;
     }
 
-    .lightbox-inner img,
-    .lightbox-inner video {
+    .lightbox-inner img {
       max-width: 90vw;
       max-height: 85vh;
       border-radius: 2px;
@@ -191,27 +176,6 @@
 
     .lightbox-prev { left: 12px; }
     .lightbox-next { right: 12px; }
-
-    .empty {
-      text-align: center;
-      padding: 100px 20px;
-      color: #444;
-    }
-
-    .empty p {
-      font-family: 'Cormorant Garamond', serif;
-      font-style: italic;
-      font-size: 1.6rem;
-      margin-bottom: 8px;
-      color: #555;
-    }
-
-    .empty span {
-      font-size: 0.75rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: #3a3a3a;
-    }
   </style>
 </head>
 <body>
@@ -222,23 +186,25 @@
   </header>
 
   <div class="gallery" id="gallery">
-    <!-- ADICIONA AS TUAS FOTOS E VÍDEOS AQUI -->
+
+    <!-- VÍDEO DO DRIVE -->
+    <div class="item">
+      <iframe
+        src="https://drive.google.com/file/d/1VzVjuuXVw-uAV3EWHMzgqNZN7Lyttqnb/preview"
+        width="100%"
+        height="500"
+        frameborder="0"
+        allowfullscreen>
+      </iframe>
+    </div>
+
+    <!-- ADICIONA MAIS FOTOS AQUI -->
     <!-- Exemplo foto:
     <div class="item">
       <img src="foto1.jpg" alt="" loading="lazy" />
     </div>
     -->
-    <!-- Exemplo vídeo:
-    <div class="item">
-      <video src="video1.mp4" muted playsinline preload="metadata"></video>
-      <div class="play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-    </div>
-    -->
-  </div>
 
-  <div class="empty" id="emptyState">
-    <p>Em breve…</p>
-    <span>as memórias chegam</span>
   </div>
 
   <div class="lightbox" id="lightbox">
@@ -252,17 +218,10 @@
     let currentIndex = 0;
     const items = [];
 
-    document.querySelectorAll('.gallery .item').forEach((el, i) => {
-      const img = el.querySelector('img');
-      const vid = el.querySelector('video');
-      if (img) items.push({ type: 'image', src: img.src });
-      if (vid) items.push({ type: 'video', src: vid.src });
-      el.onclick = () => openLightbox(i);
+    document.querySelectorAll('.gallery .item img').forEach((el, i) => {
+      items.push({ type: 'image', src: el.src });
+      el.parentElement.onclick = () => openLightbox(i);
     });
-
-    if (items.length > 0) {
-      document.getElementById('emptyState').style.display = 'none';
-    }
 
     function openLightbox(index) {
       if (items.length === 0) return;
@@ -286,11 +245,7 @@
     function renderLightbox() {
       const inner = document.getElementById('lightboxInner');
       const item = items[currentIndex];
-      if (item.type === 'image') {
-        inner.innerHTML = `<img src="${item.src}" />`;
-      } else {
-        inner.innerHTML = `<video src="${item.src}" controls autoplay style="max-width:90vw;max-height:85vh;border-radius:2px;display:block;"></video>`;
-      }
+      inner.innerHTML = `<img src="${item.src}" />`;
     }
 
     document.getElementById('lightbox').addEventListener('click', function(e) {
