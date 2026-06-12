@@ -87,7 +87,7 @@
     .gallery {
       column-count: 3;
       column-gap: 10px;
-      padding: 20px 20px 80px;
+      padding: 20px 20px 40px;
       max-width: 1200px;
       margin: 0 auto;
     }
@@ -123,6 +123,111 @@
       border-radius: 2px;
     }
 
+    /* CARTA */
+    .carta-section {
+      max-width: 760px;
+      margin: 0 auto 80px;
+      padding: 0 24px;
+    }
+
+    .carta {
+      background: rgba(255,255,255,0.05);
+      border-radius: 16px;
+      padding: 56px 60px;
+      box-shadow: 0 8px 48px rgba(0,0,0,0.4);
+      border: 1px solid rgba(201,169,110,0.2);
+      position: relative;
+    }
+
+    .carta::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #c9a96e, #f0ece4, #c9a96e);
+      border-radius: 16px 16px 0 0;
+    }
+
+    .carta-deco {
+      text-align: center;
+      color: #c9a96e;
+      font-size: 18px;
+      letter-spacing: 0.4em;
+      margin-bottom: 28px;
+    }
+
+    .carta-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin: 16px 0 32px;
+      color: #c9a96e;
+    }
+
+    .carta-divider::before, .carta-divider::after {
+      content: '';
+      width: 60px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #c9a96e);
+    }
+
+    .carta-divider::after {
+      background: linear-gradient(90deg, #c9a96e, transparent);
+    }
+
+    .carta-titulo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 300;
+      color: #f0ece4;
+      text-align: center;
+      letter-spacing: 0.02em;
+    }
+
+    .carta-titulo em {
+      font-style: italic;
+      color: #c9a96e;
+    }
+
+    .carta-texto {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem;
+      line-height: 1.95;
+      color: #d4cfc8;
+      text-align: justify;
+    }
+
+    .carta-texto p { margin-bottom: 1.5em; }
+
+    .carta-texto p:first-child::first-letter {
+      font-size: 3.2rem;
+      font-weight: 300;
+      float: left;
+      line-height: 0.8;
+      margin-right: 8px;
+      color: #c9a96e;
+      font-style: italic;
+    }
+
+    .carta-assinatura {
+      text-align: right;
+      margin-top: 36px;
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.25rem;
+      color: #c9a96e;
+    }
+
+    .carta-fim {
+      text-align: center;
+      margin-top: 28px;
+      color: #c9a96e;
+      font-size: 1.2rem;
+      letter-spacing: 0.4em;
+    }
+
+    /* LIGHTBOX */
     .lightbox {
       display: none;
       position: fixed;
@@ -188,6 +293,10 @@
 
     .lightbox-prev { left: 12px; }
     .lightbox-next { right: 12px; }
+
+    @media (max-width: 600px) {
+      .carta { padding: 36px 24px; }
+    }
   </style>
 </head>
 <body>
@@ -219,6 +328,28 @@
     </div>
     -->
 
+  </div>
+
+  <!-- CARTA -->
+  <div class="carta-section">
+    <div class="carta">
+      <div class="carta-deco">✦ ✦ ✦</div>
+      <div class="carta-titulo">Minha <em>negrita!</em></div>
+      <div class="carta-divider">✦</div>
+      <div class="carta-texto">
+        <p>Há amizades que se tornam tão grandes que deixam de ser apenas amizades, e a nossa é exatamente assim.</p>
+        <p>És uma das pessoas mais importantes da minha vida, a pessoa a quem conto tudo, sem medos nem filtros. És aquela que está presente nos melhores momentos, mas também nos piores, e que consegue sempre encontrar uma forma de me fazer rir quando preciso.</p>
+        <p>Não consigo sequer explicar a quantidade de memórias que temos juntas. Foram tantas gargalhadas até doer a barriga, tantas conversas, tantos choros, tantas aventuras, tantas piadas sem sentido, tantas danças aleatórias e tantos memes recriados que já perdi a conta. Não há ninguém com quem me divirta tanto como contigo.</p>
+        <p>O mais bonito da nossa amizade é que já vai muito além de nós. Fazes parte da minha família e eu sinto-me parte da tua. As nossas casas já são praticamente uma só, os almoços, os jantares, os dias passados juntas tornaram-se algo tão normal que já não consigo imaginar a minha vida sem isso.</p>
+        <p>Adoro tudo em ti: o teu coração enorme, a tua forma de cuidar de quem amas, o teu sentido de humor, a tua personalidade e a maneira como consegues tornar qualquer momento especial. És daquelas pessoas raras que deixam a vida de toda a gente melhor só por existirem.</p>
+        <p>Tivemos os nossos altos e baixos, mas se há coisa que nunca mudou foi o carinho imenso que tenho por ti. Sempre foste uma das minhas pessoas favoritas e sempre vais ser.</p>
+        <p>Obrigada por cada abraço, cada conselho, cada gargalhada, cada meme, cada dança ridícula e cada memória que construímos juntas. Obrigada por seres a minha branquinha, a minha baixinha, a minha negrita e, acima de tudo, a minha melhor amiga.</p>
+        <p>Tenho um orgulho infinito em ti e vou estar sempre aqui para ti, em qualquer fase da vida.</p>
+        <p>Amo-te com todas as minhas forças. Para sempre nós. 💌</p>
+      </div>
+      <div class="carta-assinatura">Com todo o amor, a tua Ritxi 🤍</div>
+      <div class="carta-fim">✦ ✿ ✦</div>
+    </div>
   </div>
 
   <div class="lightbox" id="lightbox">
